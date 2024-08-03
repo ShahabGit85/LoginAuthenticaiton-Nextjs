@@ -1,8 +1,9 @@
+import Main from "../components/Main"
 import Image from "next/image";
 export default function Home() {
   return (
     <>
-      <h1>Wellcome</h1>
+      <Main/>
     </>
   );
 }
