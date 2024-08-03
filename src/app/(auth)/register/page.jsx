@@ -15,7 +15,7 @@ const Register = () => {
     router.push("/login")
   }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-700">
+    <div className="min-h-screen flex items-center justify-center bg-gray-700" style={{ backgroundImage: 'url(/images/bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="max-w-md w-full bg-white p-8 shadow-md rounded-lg">
         <h2 className="text-2xl font-bold text-center text-blue-700">Create an account</h2>
         <form className="mt-8 space-y-6">

@@ -14,7 +14,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-700">
+    <div 
+      className="min-h-screen flex items-center justify-center" 
+      style={{ backgroundImage: 'url(/images/bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+    >
       <div className="max-w-md w-full bg-white p-8 shadow-md rounded-lg">
         <h2 className="text-2xl font-bold text-center text-blue-700">Welcome back!</h2>
         <form className="mt-8 space-y-6" onSubmit={handleSignIn}>
@@ -63,8 +66,7 @@ const Login = () => {
           </div>
           <div className="text-center">
             <Link href="/register" className="text-sm text-blue-600 hover:underline">
-              Don't have an account? 
-              <button className='hover:underline'>Signup</button>
+              Don't have an account? Signup
             </Link>
           </div>
         </form>
