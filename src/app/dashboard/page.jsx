@@ -25,6 +25,7 @@ const Layout = ({ children }) => {
         <nav className="p-4 border-t border-black">
           <Link href="/dashboard/home" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Home</Link>
           <Link href="/dashboard/profile" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Profile</Link>
+          <Link href="/login" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Logout</Link>
         </nav>
       </div>
 
