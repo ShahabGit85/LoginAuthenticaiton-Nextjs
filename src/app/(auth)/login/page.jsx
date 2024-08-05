@@ -32,7 +32,7 @@ const Login = () => {
           body: JSON.stringify(formdata)
         }
       )
-      const data = response.json()
+      const data = await response.json()
       console.log("user login successfully and user data is =>", data)
       if(response.ok){
         toast.success("Login Successfully")
@@ -41,11 +41,12 @@ const Login = () => {
           
         }, 1000);
       }
-    } catch (err) {
-      toast.error(data.err)
+      else{
+        toast.error(data.error)
+      }
     }
-    finally{
-      console.log("")
+    catch(error){
+      toast.error(data.message)
     }
    
   };
