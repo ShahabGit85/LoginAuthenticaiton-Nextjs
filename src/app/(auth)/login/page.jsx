@@ -2,15 +2,52 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 const Login = () => {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formdata,setFormdata] =  useState({
+    email: "",
+    password: "",
+  })
 
-  const handleSignIn = (e) => {
-    e.preventDefault();
-    router.push("/dashboard/home");
+  const handleChange = (e) =>{
+    const {name, value} = e.target;
+    setFormdata((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    
+  }
+
+  const handleSignIn = async (e) => {
+    try {
+      e.preventDefault();
+      const response = await fetch ("/api/login", 
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":"application/json"
+          },
+          body: JSON.stringify(formdata)
+        }
+      )
+      const data = response.json()
+      console.log("user login successfully and user data is =>", data)
+      if(response.ok){
+        toast.success("Login Successfully")
+        setTimeout(() => {
+          router.push("/dashboard/home");
+          
+        }, 1000);
+      }
+    } catch (err) {
+      toast.error(data.err)
+    }
+    finally{
+      console.log("")
+    }
+   
   };
 
   return (
@@ -18,7 +55,7 @@ const Login = () => {
       className="min-h-screen flex items-center justify-center" 
       style={{ backgroundImage: 'url(/images/bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
-      <div className="max-w-md w-full bg-white p-8 shadow-md rounded-lg">
+      <div className="max-w-md w-full bg-transparent p-8 shadow-lg rounded-lg">
         <h2 className="text-2xl font-bold text-center text-blue-700">Welcome back!</h2>
         <form className="mt-8 space-y-6" onSubmit={handleSignIn}>
           <div>
@@ -31,8 +68,8 @@ const Login = () => {
               type="email"
               autoComplete="email"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formdata.email}
+              onChange={handleChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
@@ -46,8 +83,8 @@ const Login = () => {
               type="password"
               autoComplete="current-password"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formdata.password}
+              onChange={handleChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>
@@ -60,16 +97,17 @@ const Login = () => {
             </button>
           </div>
           <div className="text-center">
-            <a href="#" className="text-sm text-blue-600 hover:underline">
+            <a href="#" className="text-sm text-gray-900 hover:underline">
               Forgot your password?
             </a>
           </div>
           <div className="text-center">
-            <Link href="/register" className="text-sm text-blue-600 hover:underline">
-              Don't have an account? Signup
+            <Link href="/register" className="text-sm text-black hover:underline">
+              Don't have an account? <b className='text-blue-600'>Signup</b>
             </Link>
           </div>
         </form>
+        <Toaster/>
       </div>
     </div>
   );

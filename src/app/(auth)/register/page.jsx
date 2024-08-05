@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import axios from "axios"
 
 const Register = () => {
@@ -36,15 +37,18 @@ const Register = () => {
       const data = await res.json();
       console.log("this is user data =>", data);
       if(res.ok){
-        
-        router.push("/login");
+        toast.success("Account Created successfylly")
+        setTimeout(() => {
+          router.push("/login");         
+        }, 1000);
       }
     }
     catch(error){
-      console.log("error are occure", error)
+      toast.error(data.error)
+      // console.log("error are occure", error)
     }
     finally{
-
+      console.log("")
     }
   }
   return (
@@ -111,6 +115,7 @@ const Register = () => {
             </Link>
           </div>
         </form>
+        <Toaster/>
       </div>
     </div>
   );
