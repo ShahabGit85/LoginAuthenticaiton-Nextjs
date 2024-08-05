@@ -42,13 +42,12 @@ const Register = () => {
           router.push("/login");         
         }, 1000);
       }
+      else{
+        toast.error(data.error)
+      }
     }
     catch(error){
-      toast.error(data.error)
-      // console.log("error are occure", error)
-    }
-    finally{
-      console.log("")
+      toast.error(data.message)
     }
   }
   return (

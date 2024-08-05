@@ -1,17 +1,20 @@
 "use client"
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const Layout = ({ children }) => {
+  const router = useRouter()
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
+    const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const handleLogout = () =>{
+     router.push("/")
+  }
   return (
     <div className="bg-white flex min-h-screen">
-
       {/* Sidebar */}
       <div className={`fixed inset-y-0 left-0 w-64  shadow-lg bg-white text-black transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}>
         <div className="flex items-center justify-between h-16 bg-white px-4">
@@ -25,7 +28,11 @@ const Layout = ({ children }) => {
         <nav className="p-4 border-t border-black">
           <Link href="/dashboard/home" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Home</Link>
           <Link href="/dashboard/profile" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Profile</Link>
-          <Link href="/login" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">Logout</Link>
+          <div className="block cursor-pointer py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200" onClick={handleLogout}>
+            <button >
+            Logout
+            </button>
+          </div>
         </nav>
       </div>
 
