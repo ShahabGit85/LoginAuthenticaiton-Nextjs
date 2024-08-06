@@ -2,13 +2,15 @@
 import Card from "@/components/card";
 import Layout from "../page";
 import CardData from "../../../Utills/cardData.json";
+import { useAuth } from "@/context/context";
 
-const Home = ({ isSidebarOpen }) => {
+
+const Home = () => {
+  const isAuthenticated =  useAuth() 
+  console.log("is Authenticated home =>", isAuthenticated)
+
   return (
     <Layout>
-      <h1 className="text-center text-2xl font-bold text-black mb-6">
-        This is the Home Page
-      </h1>
       <div
         className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3"
       >

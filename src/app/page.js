@@ -1,9 +1,9 @@
-import Main from "../components/Main"
-import Image from "next/image";
-export default function Home() {
+import { AuthProvider } from "@/context/context";
+import Login from "./(auth)/login/page";
+export default function App() {
   return (
-    <>
-      <Main/>
-    </>
+    <AuthProvider>
+      <Login/>
+    </AuthProvider>
   );
 }

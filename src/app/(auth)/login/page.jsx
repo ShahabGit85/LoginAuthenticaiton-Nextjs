@@ -1,59 +1,62 @@
-"use client"
+"use client";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { useAuth } from '@/context/context';
+
 const Login = () => {
+  const { isAuthenticated, login } = useAuth();
   const router = useRouter();
-  const [formdata,setFormdata] =  useState({
+  const [formdata, setFormdata] = useState({
     email: "",
     password: "",
-  })
+  });
 
-  const handleChange = (e) =>{
-    const {name, value} = e.target;
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/dashboard/home");
+    }
+  }, [isAuthenticated, router]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormdata((prev) => ({
       ...prev,
       [name]: value,
     }));
-    
-  }
+  };
 
   const handleSignIn = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
-      const response = await fetch ("/api/login", 
-        {
-          method: "POST",
-          headers: {
-            "Content-Type":"application/json"
-          },
-          body: JSON.stringify(formdata)
-        }
-      )
-      const data = await response.json()
-      console.log("user login successfully and user data is =>", data)
-      if(response.ok){
-        toast.success("Login Successfully")
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formdata),
+      });
+      const data = await response.json();
+      console.log("User login successfully and user data is =>", data.user);
+
+      if (response.ok) {
+        login(data.user); 
+        toast.success("Login Successfully");
         setTimeout(() => {
           router.push("/dashboard/home");
-          
         }, 1000);
+      } else {
+        toast.error(data.error);
       }
-      else{
-        toast.error(data.error)
-      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
     }
-    catch(error){
-      toast.error(data.message)
-    }
-   
   };
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center" 
+    <div
+      className="min-h-screen flex items-center justify-center"
       style={{ backgroundImage: 'url(/images/bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
       <div className="max-w-md w-full bg-transparent p-8 shadow-lg rounded-lg">
@@ -108,7 +111,7 @@ const Login = () => {
             </Link>
           </div>
         </form>
-        <Toaster/>
+        <Toaster />
       </div>
     </div>
   );
